@@ -1,7 +1,7 @@
 {
   "name": "rules4code",
-  "version": "1.0.0",
-  "description": "CLI tool to sync configuration files and rules across projects",
+  "version": "2.0.0",
+  "description": "CLI tool to manage Claude Code components (skills, commands, MCP servers, hooks) across projects",
   "main": "cli.js",
   "bin": {
     "rules4code": "./cli.js",
