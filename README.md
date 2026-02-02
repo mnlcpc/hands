@@ -1,6 +1,6 @@
 # Hands 🙌🧠
 
-A CLI tool to download and install configuration files, rules, and AI agent instructions across projects.
+A CLI tool to manage and distribute Claude Code components (skills, commands, MCP servers, hooks) across projects.
 
 ## Philosophy
 
@@ -8,11 +8,11 @@ Keep your configuration wisdom in one place and distribute it effortlessly. No c
 
 ## Features
 
-- 🎯 **Zero-config approach** - File paths in `/rules` mirror installation paths
-- 📁 **Category-based navigation** - Organized by tool (.claude, .cursor, .eslintrc, etc.)
-- ✅ **Smart preselection** - Already installed files are pre-selected
-- ⚠️ **Conflict detection** - Clear warnings for files with different content
-- 🔄 **Safe backups** - Existing files backed up as `.local` before overwrite
+- **Zero-config approach** - File paths in `/rules` mirror installation paths
+- **Category-based navigation** - Organized by tool (.claude, .cursor, .eslintrc, etc.)
+- **Smart preselection** - Already installed files are pre-selected
+- **Conflict detection** - Clear warnings for files with different content
+- **Safe backups** - Existing files backed up as `.local` before overwrite
 
 ## Installation
 
@@ -34,15 +34,13 @@ npm install -g .
 Navigate to any project directory and run:
 
 ```bash
-rules4code
-# or use the short alias
-r4c
+hands
 ```
 
-### Or run directly with npx (⚠️ YET TO BE PUBLISHED):
+### Or run directly with npx:
 
 ```bash
-npx rules4code
+npx hands
 ```
 
 The CLI will:
@@ -68,13 +66,13 @@ Categories are automatically derived from top-level folder names
 
 1. Create `rules/.claude/agents/my-agent.md`
 2. Write your agent instructions
-3. Run `rules4code` (or `r4c`) in any project to install
+3. Run `hands` in any project to install
 
 ### For ESLint configurations:
 
 1. Create `rules/.eslintrc.d/my-rules.json`
 2. Add your ESLint rules
-3. Install with `rules4code` (or `r4c`)
+3. Install with `hands`
 
 ### For any tool:
 
@@ -93,11 +91,11 @@ Categories are automatically derived from top-level folder names
 
 - **Not selected** - Files not installed or different from repo
 - **Pre-selected** - Files already installed and synced
-- **⚠️ warning** - Existing file with different content (will be backed up)
+- **Warning** - Existing file with different content (will be backed up)
 
 ## Git Workflow
 
 1. Store this repo on GitHub
 2. Add/modify rules in the `/rules` directory
 3. Commit and push changes
-4. In any project, run `rules4code` (or `r4c`) to sync latest configurations
+4. In any project, run `hands` to sync latest configurations

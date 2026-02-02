@@ -103,8 +103,8 @@ Types: feat, fix, refactor, test, docs, chore. No trailers.
 ## Step 7: UPDATE LINEAR (mandatory)
 
 - If sub-task: mark sub-task as Done
-- If main issue (no sub-tasks): mark issue as In Review
-- If main issue has sub-tasks and all are now Done: mark main issue as In Review
+- If main issue (no sub-issues): mark issue as In Review
+- If main issue has sub-issues and **all sub-issues** are now Done: mark main issue as In Review
 
 ---
 

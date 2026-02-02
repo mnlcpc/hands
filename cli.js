@@ -11,7 +11,7 @@ const { validateComponentEnvVars, formatEnvWarning } = require('./lib/env-valida
 const { syncMcpServers, syncHooks } = require('./lib/merger');
 const { trackInstall, computeFileHash } = require('./lib/tracker');
 
-class RulesSync {
+class Hands {
   constructor() {
     this.rulesPath = path.join(__dirname, 'rules');
   }
@@ -264,7 +264,7 @@ class RulesSync {
   async run() {
     await this.init();
 
-    console.log(chalk.bold.green('\n🔧 Rules4Code v2.0\n'));
+    console.log(chalk.bold.green('\n🤲 Hands v2.0\n'));
 
     // Detect all components
     const components = await detectComponents(this.rulesPath);
@@ -316,11 +316,11 @@ class RulesSync {
 
 // Run the CLI
 if (require.main === module) {
-  const rulesSync = new RulesSync();
-  rulesSync.run().catch(error => {
+  const hands = new Hands();
+  hands.run().catch(error => {
     console.error(chalk.red('Error:'), error.message);
     process.exit(1);
   });
 }
 
-module.exports = RulesSync;
+module.exports = Hands;

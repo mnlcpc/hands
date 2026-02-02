@@ -1,11 +1,10 @@
 {
-  "name": "rules4code",
+  "name": "hands",
   "version": "2.0.0",
   "description": "CLI tool to manage Claude Code components (skills, commands, MCP servers, hooks) across projects",
   "main": "cli.js",
   "bin": {
-    "rules4code": "./cli.js",
-    "r4c": "./cli.js"
+    "hands": "./cli.js"
   },
   "scripts": {
     "start": "node cli.js",
@@ -18,7 +17,8 @@
     "sync",
     "eslint",
     "claude",
-    "cursor"
+    "cursor",
+    "hands"
   ],
   "author": "",
   "license": "MIT",
