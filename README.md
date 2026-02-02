@@ -46,10 +46,10 @@ The CLI will:
 
 ### Skills
 
-Create a directory under `hands/.claude/skills/<name>/` with a `SKILL.md` file:
+Create a directory under `hands/skills/<name>/` with a `SKILL.md` file:
 
 ```
-hands/.claude/skills/my-skill/
+hands/skills/my-skill/
   SKILL.md           # Skill instructions (required)
   manifest.json      # Dependency declarations (optional)
 ```
@@ -70,7 +70,7 @@ All fields are optional. Skills without a manifest have no dependencies.
 
 ### Agents
 
-Create `hands/.claude/agents/<name>.md`:
+Create `hands/agents/<name>.md`:
 
 ```markdown
 ---
@@ -83,27 +83,38 @@ Agent instructions here.
 
 ### Hooks
 
-Create `hands/.claude/hooks/<name>.json`:
+Create `hands/hooks/<name>.json` using the canonical format:
 
 ```json
 {
-  "Stop": [
+  "stop": [
     {
-      "matcher": ".*",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "say 'Task completed'"
-        }
-      ]
+      "matcher": "*",
+      "command": "say 'Task completed'"
     }
   ]
 }
 ```
 
+Hooks use a tool-agnostic format that Hands translates and installs to both Claude Code (`.claude/settings.json`) and Cursor (`.cursor/hooks.json`) automatically. The CLI auto-detects which tools are present in the target project.
+
+#### Event names
+
+| Canonical     | Claude Code     | Cursor          |
+|---------------|-----------------|-----------------|
+| `stop`        | `Stop`          | `stop`          |
+| `preToolUse`  | `PreToolUse`    | `preToolUse`    |
+| `postToolUse` | `PostToolUse`   | `postToolUse`   |
+| `notification`| `Notification`  | *(not supported)* |
+| `subagentStop`| `SubagentStop`  | `subagentStop`  |
+| `sessionStart`| `SessionStart`  | `sessionStart`  |
+| `sessionEnd`  | `SessionEnd`    | `sessionEnd`    |
+
+Events that don't map to a tool are silently skipped during installation.
+
 ### MCP Servers (dependency pool)
 
-Create `hands/.claude/mcp-servers/<name>.json`:
+Create `hands/mcp/<name>.json`:
 
 ```json
 {
@@ -145,6 +156,6 @@ When you deselect a skill, orphaned dependencies are identified and you're asked
 ## Git Workflow
 
 1. Store this repo on GitHub
-2. Add or modify components in `hands/.claude/`
+2. Add or modify components in `hands/`
 3. Commit and push
 4. In any project, run `hands` to sync

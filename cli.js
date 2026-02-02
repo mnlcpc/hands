@@ -10,6 +10,7 @@ const { addStatusToComponents, formatComponentDisplay, Status } = require('./lib
 const { validateComponentEnvVars, formatEnvWarning } = require('./lib/env-validator');
 const { resolveDependencies, findOrphans } = require('./lib/resolver');
 const { addMcpServer, removeMcpServer, syncHooks } = require('./lib/merger');
+const { detectTools } = require('./lib/adapters');
 const tracker = require('./lib/tracker');
 
 class Hands {
@@ -81,9 +82,9 @@ class Hands {
    */
   async displayComponentUI(componentsWithStatus) {
     const categories = [
-      { key: 'skills', label: 'Skills', icon: '📦' },
+      { key: 'skills', label: 'Skills', icon: '📘' },
       { key: 'agents', label: 'Agents', icon: '🤖' },
-      { key: 'hooks', label: 'Hooks', icon: '🔗' }
+      { key: 'hooks', label: 'Hooks', icon: '🪝' }
     ];
 
     const choices = [];
@@ -108,7 +109,7 @@ class Hands {
 
     if (choices.length === 0) {
       console.log(chalk.yellow('\nNo components found in hands directory.'));
-      console.log(chalk.dim('Add components to hands/.claude/ to get started.'));
+      console.log(chalk.dim('Add components to hands/ to get started.'));
       return [];
     }
 
@@ -272,7 +273,7 @@ class Hands {
       }
 
       const trackedHooks = await tracker.getTrackedComponents('hooks');
-      const hookResult = await syncHooks('.claude/settings.json', selected.hooks, trackedHooks);
+      const hookResult = await syncHooks(selected.hooks, trackedHooks, this.tools);
 
       results.installed.push(...hookResult.added);
       results.updated.push(...hookResult.updated);
@@ -334,7 +335,7 @@ class Hands {
         default: true
       });
       if (proceed) {
-        await removeMcpServer('.claude/config.json', orphan.name);
+        await removeMcpServer('.claude/mcp.json', orphan.name);
         await tracker.removeDependency('mcpServers', orphan.name);
         results.depsRemoved.push(`${orphan.name} (mcp)`);
         console.log(chalk.yellow(`  Removed dependency: ${orphan.name} (MCP)`));
@@ -388,7 +389,9 @@ class Hands {
 
     console.log(chalk.bold.green('\n🤲 Hands v3.0\n'));
 
-    // Detect components and dependency pool
+    // Detect target tools and components
+    this.tools = await detectTools();
+
     const [components, dependencyPool] = await Promise.all([
       detectComponents(this.handsPath),
       detectDependencyPool(this.handsPath)
@@ -398,10 +401,10 @@ class Hands {
     if (allComponents.length === 0) {
       console.log(chalk.yellow('No components found in hands directory.'));
       console.log(chalk.dim('\nExpected structure:'));
-      console.log(chalk.dim('  hands/.claude/skills/<name>/SKILL.md'));
-      console.log(chalk.dim('  hands/.claude/agents/<name>.md'));
-      console.log(chalk.dim('  hands/.claude/hooks/<name>.json'));
-      console.log(chalk.dim('  hands/.claude/mcp-servers/<name>.json  (dependency pool)'));
+      console.log(chalk.dim('  hands/skills/<name>/SKILL.md'));
+      console.log(chalk.dim('  hands/agents/<name>.md'));
+      console.log(chalk.dim('  hands/hooks/<name>.json'));
+      console.log(chalk.dim('  hands/mcp/<name>.json  (dependency pool)'));
       return;
     }
 

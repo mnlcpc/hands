@@ -1,0 +1,8 @@
+{
+  "stop": [
+    {
+      "matcher": "*",
+      "command": "say 'Task completed'"
+    }
+  ]
+}
