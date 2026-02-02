@@ -46,10 +46,10 @@ The CLI will:
 
 ### Skills
 
-Create a directory under `rules/.claude/skills/<name>/` with a `SKILL.md` file:
+Create a directory under `hands/.claude/skills/<name>/` with a `SKILL.md` file:
 
 ```
-rules/.claude/skills/my-skill/
+hands/.claude/skills/my-skill/
   SKILL.md           # Skill instructions (required)
   manifest.json      # Dependency declarations (optional)
 ```
@@ -70,7 +70,7 @@ All fields are optional. Skills without a manifest have no dependencies.
 
 ### Agents
 
-Create `rules/.claude/agents/<name>.md`:
+Create `hands/.claude/agents/<name>.md`:
 
 ```markdown
 ---
@@ -83,7 +83,7 @@ Agent instructions here.
 
 ### Hooks
 
-Create `rules/.claude/hooks/<name>.json`:
+Create `hands/.claude/hooks/<name>.json`:
 
 ```json
 {
@@ -103,7 +103,7 @@ Create `rules/.claude/hooks/<name>.json`:
 
 ### MCP Servers (dependency pool)
 
-Create `rules/.claude/mcp-servers/<name>.json`:
+Create `hands/.claude/mcp-servers/<name>.json`:
 
 ```json
 {
@@ -145,6 +145,6 @@ When you deselect a skill, orphaned dependencies are identified and you're asked
 ## Git Workflow
 
 1. Store this repo on GitHub
-2. Add or modify components in `rules/.claude/`
+2. Add or modify components in `hands/.claude/`
 3. Commit and push
 4. In any project, run `hands` to sync

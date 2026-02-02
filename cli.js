@@ -14,14 +14,14 @@ const tracker = require('./lib/tracker');
 
 class Hands {
   constructor() {
-    this.rulesPath = path.join(__dirname, 'rules');
+    this.handsPath = path.join(__dirname, 'hands');
   }
 
   async init() {
     try {
-      await fs.ensureDir(this.rulesPath);
+      await fs.ensureDir(this.handsPath);
     } catch (error) {
-      console.error(chalk.red('Error accessing rules directory:'), error.message);
+      console.error(chalk.red('Error accessing hands directory:'), error.message);
       process.exit(1);
     }
   }
@@ -107,8 +107,8 @@ class Hands {
     }
 
     if (choices.length === 0) {
-      console.log(chalk.yellow('\nNo components found in rules directory.'));
-      console.log(chalk.dim('Add components to rules/.claude/ to get started.'));
+      console.log(chalk.yellow('\nNo components found in hands directory.'));
+      console.log(chalk.dim('Add components to hands/.claude/ to get started.'));
       return [];
     }
 
@@ -390,18 +390,18 @@ class Hands {
 
     // Detect components and dependency pool
     const [components, dependencyPool] = await Promise.all([
-      detectComponents(this.rulesPath),
-      detectDependencyPool(this.rulesPath)
+      detectComponents(this.handsPath),
+      detectDependencyPool(this.handsPath)
     ]);
 
     const allComponents = getAllComponents(components);
     if (allComponents.length === 0) {
-      console.log(chalk.yellow('No components found in rules directory.'));
+      console.log(chalk.yellow('No components found in hands directory.'));
       console.log(chalk.dim('\nExpected structure:'));
-      console.log(chalk.dim('  rules/.claude/skills/<name>/SKILL.md'));
-      console.log(chalk.dim('  rules/.claude/agents/<name>.md'));
-      console.log(chalk.dim('  rules/.claude/hooks/<name>.json'));
-      console.log(chalk.dim('  rules/.claude/mcp-servers/<name>.json  (dependency pool)'));
+      console.log(chalk.dim('  hands/.claude/skills/<name>/SKILL.md'));
+      console.log(chalk.dim('  hands/.claude/agents/<name>.md'));
+      console.log(chalk.dim('  hands/.claude/hooks/<name>.json'));
+      console.log(chalk.dim('  hands/.claude/mcp-servers/<name>.json  (dependency pool)'));
       return;
     }
 
